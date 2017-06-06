@@ -43,7 +43,7 @@ class stupidRenderer {
       float sn = 0.5 + 0.5 * sin(float(millis()) / 500);
       float sz = noise(loc.x * scaler + float(millis()) / 1000, loc.y * scaler) * curS * 4;
       float nn = noise(loc.y * scaler, loc.x * scaler, float(millis()) / 1000) * 1;
-      
+
       pushMatrix();
       strokeWeight(1);
       stroke(255, sz * 50, 0, 255);
@@ -60,7 +60,7 @@ class stupidRenderer {
       scale(sz + 1.4 * sn + 0.3, sz + 1.4 * sn + 0.3);
       rect(0, 0, 3, 3);
       popMatrix();
-      
+
       pushMatrix();
       rotate(-PI / 4);
       fill(255, (sz + 0.1) * 255);
@@ -70,9 +70,8 @@ class stupidRenderer {
       textAlign(CENTER, CENTER);
       text("违规", 10, 0);
       popMatrix();
-      
     } else {
-      
+
       pushMatrix();
       targetS = (1 - min(200, abs(dist(x, y, width / 2, height / 2) - xx * 1500)) / 200) * min(1, xx * 7);
       curS += (targetS - curS) * 0.1;
@@ -83,31 +82,66 @@ class stupidRenderer {
       scale(sz + nn, sz + nn);
       rect(0, 0, 2, 2);
       popMatrix();
-      
-      if(this.show == 0 && sz > 0.9 && random(1) > 0.99 && millis() - triggered > 1000) {
+
+      if (this.show == 0 && sz > 0.9 && random(1) > 0.99 && millis() - triggered > 1000) {
         triggered = millis();
         this.show = 1;
       }
-      if(this.show > 0) {
-        if(this.show < 0.1) { this.show = 0; }
-        else { this.show -= this.show * 0.1; }
-        
+      if (this.show > 0) {
+        if (this.show < 0.1) { 
+          this.show = 0;
+        } else { 
+          this.show -= this.show * 0.1;
+        }
+
         float f = pow(sin(this.show * 3.14), 10);
         pushMatrix();
         rotate(-PI / 4);
-        
+
+
         translate(15, this.offset);
-        rectMode(CENTER);
-        stroke(255, random(1) > 0.99 ? 255: 0);
-        noFill();
-        rect(10, 2, textWidth(this.name) + 5, 15);
-        
+        if (random(1) > 0.95) {
+          stroke(255);
+          noFill();
+          float w = textWidth(this.name) + 6;
+          float h = 16;
+          beginShape();
+          vertex(-w / 2 - 5, -h / 2);
+          vertex(-w / 2 - 5, -h / 2 - 5);
+          vertex(-w / 2, -h / 2 - 5);
+          endShape();
+          
+          beginShape();
+          vertex(+w / 2 + 5, -h / 2);
+          vertex(+w / 2 + 5, -h / 2 - 5);
+          vertex(+w / 2, -h / 2 - 5);
+          endShape();
+          
+          beginShape();
+          vertex(+w / 2 + 5, +h / 2);
+          vertex(+w / 2 + 5, +h / 2 + 5);
+          vertex(+w / 2, h / 2 + 5);
+          endShape();
+          
+          beginShape();
+          vertex(-w / 2 - 5, +h / 2);
+          vertex(-w / 2 - 5, +h / 2 + 5);
+          vertex(-w / 2, h / 2 + 5);
+          endShape();
+          
+        } else if(random(1) > 0.99) {
+          //stroke(255);
+          //noFill();
+          rectMode(CENTER);
+          rect(0, 0, textWidth(this.name) + 5, 15);
+        }
+ 
         fill(255, f * 255);
         textFont(pf, 5);
         //scale(0.8);
         textAlign(CENTER, CENTER);
         text(this.name, 10, 0);
-        
+
         popMatrix();
       }
     }

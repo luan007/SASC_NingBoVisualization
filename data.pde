@@ -11,6 +11,8 @@ class stupidRenderer {
   float offset = random(50) + 20;
   float targetS;
   float curS;
+  float show = 0;
+  float triggered = 0;
   stupidRenderer(float l1, float l2, String name, String status) {
     loc = new PVector(l1 - 121.549887, -l2 + 29.8720259);
     this.name = name;
@@ -71,6 +73,7 @@ class stupidRenderer {
       
     } else {
       
+      pushMatrix();
       targetS = (1 - min(200, abs(dist(x, y, width / 2, height / 2) - xx * 1500)) / 200) * min(1, xx * 7);
       curS += (targetS - curS) * 0.1;
       float sn = 0.5 + 0.5 * sin(float(millis()) / 500);
@@ -79,7 +82,26 @@ class stupidRenderer {
       fill(sz * 200 + 100);
       scale(sz + nn, sz + nn);
       rect(0, 0, 2, 2);
+      popMatrix();
       
+      if(this.show == 0 && sz > 0.9 && random(1) > 0.99 && millis() - triggered > 1000) {
+        triggered = millis();
+        this.show = 1;
+      }
+      if(this.show > 0) {
+        if(this.show < 0.1) { this.show = 0; }
+        else { this.show -= this.show * 0.1; }
+        
+        pushMatrix();
+        rotate(-PI / 4);
+        fill(255, pow(sin(this.show * 3.14), 10) * 255);
+        textFont(pf, 5);
+        translate(15, this.offset);
+        //scale(0.8);
+        textAlign(CENTER, CENTER);
+        text(this.name, 10, 0);
+        popMatrix();
+      }
     }
     //blendMode(NORMAL);
     popMatrix();

@@ -42,6 +42,7 @@ void setup() {
   pf = createFont("PingFang SC", 12);
   textFont(pf);
   setupData();
+  
 }
 
 void draw() {
@@ -72,8 +73,7 @@ void draw() {
   thing.endShape(CLOSE);
   thing.endDraw();
   
-  background(0, 0,0);
-  
+  background(0, 0, 0);
   
   translate(width / 2, height / 2);
   

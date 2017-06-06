@@ -83,7 +83,7 @@ class stupidRenderer {
       rect(0, 0, 2, 2);
       popMatrix();
 
-      if (this.show == 0 && sz > 0.9 && random(1) > 0.99 && millis() - triggered > 1000) {
+      if (this.show == 0 && sz > 0.99 && random(1) > 0.99 && millis() - triggered > 1000) {
         triggered = millis();
         this.show = 1;
       }
@@ -100,8 +100,8 @@ class stupidRenderer {
 
 
         translate(15, this.offset);
-        if (random(1) > 0.95) {
-          stroke(255);
+        if (random(1) > 1) {
+          stroke(255, this.show * 255);
           noFill();
           float w = textWidth(this.name) + 6;
           float h = 16;
@@ -130,8 +130,7 @@ class stupidRenderer {
           endShape();
           
         } else if(random(1) > 0.99) {
-          //stroke(255);
-          //noFill();
+          fill(255, this.show * 255);
           rectMode(CENTER);
           rect(0, 0, textWidth(this.name) + 5, 15);
         }

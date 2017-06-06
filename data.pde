@@ -92,14 +92,22 @@ class stupidRenderer {
         if(this.show < 0.1) { this.show = 0; }
         else { this.show -= this.show * 0.1; }
         
+        float f = pow(sin(this.show * 3.14), 10);
         pushMatrix();
         rotate(-PI / 4);
-        fill(255, pow(sin(this.show * 3.14), 10) * 255);
-        textFont(pf, 5);
+        
         translate(15, this.offset);
+        rectMode(CENTER);
+        stroke(255, random(1) > 0.99 ? 255: 0);
+        noFill();
+        rect(10, 2, textWidth(this.name) + 5, 15);
+        
+        fill(255, f * 255);
+        textFont(pf, 5);
         //scale(0.8);
         textAlign(CENTER, CENTER);
         text(this.name, 10, 0);
+        
         popMatrix();
       }
     }

@@ -58,7 +58,7 @@ PGraphics box;
 void renderBox() {
   box.beginDraw();
   
-  box.fill(0, 10);
+  box.fill(0, random(70));
   box.rect(0, 0, box.width, box.height);
   
   float x = xx * box.width;
@@ -66,8 +66,14 @@ void renderBox() {
   box.textFont(pf);
   box.stroke(255);
   box.strokeWeight(2);
+  box.pushMatrix();
   box.translate(x, 0);
-  box.line(0, 0, 0, box.height);
+  //box.line(0, 0, 0, box.height);
+  box.popMatrix();
+  
+  for(stupidRenderer sp: all) {
+    sp.renderOnBox(box, x);
+  }
   
   box.endDraw();
   

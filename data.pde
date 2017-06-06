@@ -12,15 +12,38 @@ class stupidRenderer {
   float targetS;
   float curS;
   float show = 0;
+  boolean showFlag = false;
   float triggered = 0;
+
+  void renderOnBox(PGraphics pg, float x) {
+    if (this.showFlag) {
+      this.showFlag = false;
+      pg.pushMatrix();
+      pg.translate(x * 2.4 - 50, random(pg.height));
+      pg.rotate(PI / 4);
+      pg.strokeWeight(1);
+      if (random(1) > 0.2) {
+        pg.stroke(255, 200);
+        pg.noFill();
+      } else {
+        pg.fill(255);
+        pg.noStroke();
+      }
+      pg.rectMode(CENTER);
+      pg.rect(0, 0, 4, 4);
+      pg.rectMode(CORNERS);
+      pg.popMatrix();
+    }
+  }
+
   stupidRenderer(float l1, float l2, String name, String status) {
     loc = new PVector(l1 - 121.549887, -l2 + 29.8720259);
     this.name = name;
     this.l1 = l1;
     this.l2 = l2;
     this.status = status;
-    if (l1 > 121.2451 && l1 < 121.8549 
-      && l2 < 30.0952 && l2 > 29.6493) {
+    if (l1 > 121.3851 && l1 < 121.6849 
+      && l2 < 30.0952 - 0.1 && l2 > 29.6493 + 0.1) {
       all.add(this);
     }
     ix = (this.status.indexOf("违规") >= 0) && random(10) > 9.9;
@@ -86,6 +109,7 @@ class stupidRenderer {
       if (this.show == 0 && sz > 0.99 && random(1) > 0.99 && millis() - triggered > 1000) {
         triggered = millis();
         this.show = 1;
+        this.showFlag = true;
       }
       if (this.show > 0) {
         if (this.show < 0.1) { 
@@ -110,31 +134,30 @@ class stupidRenderer {
           vertex(-w / 2 - 5, -h / 2 - 5);
           vertex(-w / 2, -h / 2 - 5);
           endShape();
-          
+
           beginShape();
           vertex(+w / 2 + 5, -h / 2);
           vertex(+w / 2 + 5, -h / 2 - 5);
           vertex(+w / 2, -h / 2 - 5);
           endShape();
-          
+
           beginShape();
           vertex(+w / 2 + 5, +h / 2);
           vertex(+w / 2 + 5, +h / 2 + 5);
           vertex(+w / 2, h / 2 + 5);
           endShape();
-          
+
           beginShape();
           vertex(-w / 2 - 5, +h / 2);
           vertex(-w / 2 - 5, +h / 2 + 5);
           vertex(-w / 2, h / 2 + 5);
           endShape();
-          
-        } else if(random(1) > 0.99) {
+        } else if (random(1) > 0.99) {
           fill(255, this.show * 255);
           rectMode(CENTER);
           rect(0, 0, textWidth(this.name) + 5, 15);
         }
- 
+
         fill(255, f * 255);
         textFont(pf, 5);
         //scale(0.8);
